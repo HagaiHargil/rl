@@ -24,10 +24,12 @@ class Agent:
             self.env.reset()
             self.rewards.append(self.play_one_game())
             game_counter += 1
-            if game_counter % 10_000 == 0:
-                print(f"Doing good: {game_counter}")
+            # if game_counter % 10_000 == 0:
+            #     print(f"Doing good: {game_counter}")
         average_scores = self.plot_average_score()
-        return average_scores[-100:].mean()
+        average_score = average_scores[-100:].mean() 
+        print(f"Score: {average_score}")
+        return average_score
 
     def plot_average_score(self):
         average_scores = np.asarray(self.rewards).reshape((-1, 100)).mean(axis=-1)

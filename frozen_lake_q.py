@@ -18,14 +18,14 @@ E_MIN = [0.01]
 E_RATE = np.arange(0.9995, 0.999999995, 0.00000005)
 
 
-def run_single(*params):
-    agent = Agent(0, Q, np.arange(4, dtype='uint8'), E_MAX, ALPHA, GAMMA, E_MIN, E_RATE)
+def run_single(params):
+    agent = Agent(0, Q, np.arange(4, dtype='uint8'), *params)
     score = agent.play_all_games(EPISODES)
     return (score, *params)
 
 
 if __name__ == '__main__':
     params = product(E_MAX, ALPHA, GAMMA, E_MIN, E_RATE) 
-    with Pool() as p:
+    with Pool(4) as p:
         results = p.map(run_single, params)
 
